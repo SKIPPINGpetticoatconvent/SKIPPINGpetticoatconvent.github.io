@@ -1,0 +1,494 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>Docker和WSL2安装以及迁移教程 | FTDRTD的博客</title><meta name="keywords" content="Docker,WSL2"><meta name="author" content="FTDRTD"><meta name="copyright" content="FTDRTD"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="Docker和WSL2安装以及迁移教程"><meta name="application-name" content="Docker和WSL2安装以及迁移教程"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="Docker和WSL2安装以及迁移教程"><meta property="og:url" content="http://example.com/2025/02/23/Docker%E7%94%A8%E6%B3%95/index.html"><meta property="og:site_name" content="FTDRTD的博客"><meta property="og:description" content="Docker先决条件 确保计算机运行的是 Windows 10（已更新到版本 2004 的内部版本 18362 或更高版本）或Windows 11。 安装 WSL，并为在 WSL 2 中运行的 Linux 发行版设置用户名和密码。 为了避免与在Docker Desktop上使用WSL 2发生任何潜在"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="http://example.com/imges/CN5.png"><meta property="article:author" content="FTDRTD"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="http://example.com/imges/CN5.png"><meta name="description" content="Docker先决条件 确保计算机运行的是 Windows 10（已更新到版本 2004 的内部版本 18362 或更高版本）或Windows 11。 安装 WSL，并为在 WSL 2 中运行的 Linux 发行版设置用户名和密码。 为了避免与在Docker Desktop上使用WSL 2发生任何潜在"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/2025/02/23/Docker%E7%94%A8%E6%B3%95/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: undefined,
+  postHeadAiDescription: undefined,
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":1},
+  friends_vue_info: undefined,
+  navMusic: false,
+  mainTone: {"mode":"both","api":"https://img2color-go.vercel.app/api?img=","cover_change":true},
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: FTDRTD","link":"链接: ","source":"来源: FTDRTD的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'FTDRTD的博客',
+  title: 'Docker和WSL2安装以及迁移教程',
+  postAI: '',
+  pageFillDescription: 'Docker先决条件, WSL2安装注意事项, 安装WSL2, 安装WSL2成功之后如何将WSL2迁移到任意盘符, 通过命令行安装 Docker Desktop, Docker 换源, Docker Desktop(WSL2)修改镜像存储位置先决条件确保计算机运行的是已更新到版本的内部版本或更高版本或安装并为在中运行的发行版设置用户名和密码为了避免与在上使用发生任何潜在冲突在安装之前必须卸载直接通过发行版安装的任何早期版本的和安装注意事项如果命令不起作用可能是虚拟机平台没启用去控制面板程序启用或关闭功能勾选虚拟机平台和子系统支持然后重启硬件需要支持虚拟化可以在中开启比如或可使用以下命令一键开启所需功能然后手动重新启动启用启用所需的虚拟化支持避免立即重启不过建议完成后手动重启安装在或输入如果这是第一次安装这个命令会自动启用并安装默认的发行版通常是完成后需要重启电脑确保是默认版本重启后再次打开输入这会将设置为默认版本而不是安装发行版打开搜索你喜欢的发行版比如或点击获取并安装安装完成后启动它会让你设置一个用户名和密码检查安装是否成功在或命令行输入这会列出你安装的发行版和它们的版本如果显示说明运行正常更新如果需要更新输入安装成功之后如何将迁移到任意盘符默认安装在盘我们可以通过以下步骤迁移安装位置通过以下命令列出已安装的发行版如果运行状态为需先通过以下命令关闭然后我们通过以下命令将导出为文件注意为目标发行版的名称我安装的为为导出的文件名这里我导出到导出成功后可以在导出的路径下看到导出的文件然后注销并卸载再次查看已安装的发行版可以看到已经注销并卸载了然后将导入到新位置注意为目标发行版的名称我安装的为为要安装到的新位置这里我安装到为要导入的文件名这里导入刚才导出的导入完成后再次查看已安装的发行版可以看到已成功导入到新的位置最后需要更改一下默认用户注为目标发行版的名称我安装的为命令里要写为为发行版中存在的用户名在设置用户名和密码时我创建的用户为所以命令里的这里就为以上步骤完成后看到指定安装的新位置下有文件说明迁移成功通过命令行安装在所在的目录下运行命令提示符在命令行中输入以下命令来进行的安装注默认安装位置为这里通过在命令后添加参数来修改的默认安装位置其中为指定的安装路径这里我指定的安装位置为或中用于启动进程的命令相当于的指定要运行的可执行文件和中的直接调用一致将参数传递给安装程序等价于中的对应的表示等待安装程序完成后再继续执行后续命令避免在新窗口中运行保持与的行为一致默认就在当前窗口运行借助中支持的后端可以在基于的开发环境中工作并生成基于的容器并在上的浏览器中运行容器若要安装在已安装之后按照通常的安装说明安装如果您正在运行受支持的系统会在安装期间提示您启用也有可能不提示安装完成可以自己勾选读取屏幕上显示的信息并启用继续从开始菜单启动从菜单中选择选中复选框如果在支持的系统上安装了则默认情况下将启用此选项单击重新启动后进入集成将在默认发行版上启用单击换源国内从拉取镜像有时会遇到困难此时可以配置镜像加速器官方和国内很多云服务商都提供了国内加速器服务这里以阿里云镜像为例获取地址进入后登录左侧菜单选中镜像加速器就可以看到你的专属地址了然后复制到的设置中单击在命令行执行如果从结果中看到了如下内容说明配置成功修改镜像存储位置默认会安装个子系统使用命令查看是存放程序的是存放镜像的这两个子系统都是默认放在系统盘的如何转移退出关闭将子系统导出为文件注销子系统使用新路径导入子系统',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-02-23 07:21:19',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/imges/loading.gif"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">FTDRTD的博客</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/ArchLiunx/" style="font-size: 1.05rem;">ArchLiunx<sup>6</sup></a><a href="/tags/Bug/" style="font-size: 1.05rem;">Bug<sup>1</sup></a><a href="/tags/Chinese/" style="font-size: 1.05rem;">Chinese<sup>1</sup></a><a href="/tags/Cmder/" style="font-size: 1.05rem;">Cmder<sup>1</sup></a><a href="/tags/Docker/" style="font-size: 1.05rem;">Docker<sup>2</sup></a><a href="/tags/GitHub-Actions/" style="font-size: 1.05rem;">GitHub Actions<sup>1</sup></a><a href="/tags/Hexo/" style="font-size: 1.05rem;">Hexo<sup>2</sup></a><a href="/tags/Kali-Linux/" style="font-size: 1.05rem;">Kali Linux<sup>1</sup></a><a href="/tags/Manjaro/" style="font-size: 1.05rem;">Manjaro<sup>1</sup></a><a href="/tags/Ollama/" style="font-size: 1.05rem;">Ollama<sup>1</sup></a><a href="/tags/Pixel/" style="font-size: 1.05rem;">Pixel<sup>1</sup></a><a href="/tags/Python/" style="font-size: 1.05rem;">Python<sup>1</sup></a><a href="/tags/SSH/" style="font-size: 1.05rem;">SSH<sup>2</sup></a><a href="/tags/Scoop/" style="font-size: 1.05rem;">Scoop<sup>2</sup></a><a href="/tags/Telegram/" style="font-size: 1.05rem;">Telegram<sup>1</sup></a><a href="/tags/Ubuntu/" style="font-size: 1.05rem;">Ubuntu<sup>1</sup></a><a href="/tags/Uv/" style="font-size: 1.05rem;">Uv<sup>1</sup></a><a href="/tags/VS-Code/" style="font-size: 1.05rem;">VS Code<sup>1</sup></a><a href="/tags/WSL/" style="font-size: 1.05rem;">WSL<sup>1</sup></a><a href="/tags/WSL2/" style="font-size: 1.05rem;">WSL2<sup>1</sup></a><a href="/tags/Windows/" style="font-size: 1.05rem;">Windows<sup>1</sup></a><a href="/tags/Wine/" style="font-size: 1.05rem;">Wine<sup>2</sup></a><a href="/tags/Wsl2/" style="font-size: 1.05rem;">Wsl2<sup>1</sup></a><a href="/tags/fcitx5/" style="font-size: 1.05rem;">fcitx5<sup>1</sup></a><a href="/tags/liunx/" style="font-size: 1.05rem;">liunx<sup>1</sup></a><a href="/tags/pacman/" style="font-size: 1.05rem;">pacman<sup>1</sup></a><a href="/tags/pip/" style="font-size: 1.05rem;">pip<sup>1</sup></a><a href="/tags/timeshift/" style="font-size: 1.05rem;">timeshift<sup>1</sup></a><a href="/tags/yay/" style="font-size: 1.05rem;">yay<sup>1</sup></a><a href="/tags/%E4%B8%AD%E6%96%87/" style="font-size: 1.05rem;">中文<sup>2</sup></a><a href="/tags/%E4%BB%A3%E7%90%86/" style="font-size: 1.05rem;">代理<sup>1</sup></a><a href="/tags/%E5%8E%9F%E7%94%9F%E5%AE%89%E5%8D%93/" style="font-size: 1.05rem;">原生安卓<sup>1</sup></a><a href="/tags/%E6%8E%A8%E8%8D%90/" style="font-size: 1.05rem;">推荐<sup>1</sup></a><a href="/tags/%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">搭建教程<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>8</sup></a><a href="/tags/%E7%BD%91%E7%AB%99/" style="font-size: 1.05rem;">网站<sup>1</sup></a><a href="/tags/%E8%84%9A%E6%9C%AC/" style="font-size: 1.05rem;">脚本<sup>1</sup></a><a href="/tags/%E8%BE%93%E5%85%A5%E6%B3%95/" style="font-size: 1.05rem;">输入法<sup>1</sup></a><a href="/tags/%E9%82%AE%E7%AE%B1%E9%85%8D%E7%BD%AE/" style="font-size: 1.05rem;">邮箱配置<sup>1</sup></a><a href="/tags/%E9%AA%8C%E8%AF%81/" style="font-size: 1.05rem;">验证<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/01/"><span class="card-archive-list-date">一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date">十二月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/09/"><span class="card-archive-list-date">九月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date">七月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">五月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/04/"><span class="card-archive-list-date">四月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/03/"><span class="card-archive-list-date">三月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">9</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/02/"><span class="card-archive-list-date">二月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url">教程</a><i class="anzhiyufont anzhiyu-icon-angle-right post-meta-separator"></i><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/Docker/" itemprop="url">Docker</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/Docker/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>Docker</span></a><a class="article-meta__tags" href="/tags/WSL2/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>WSL2</span></a></span></div></div><h1 class="post-title" itemprop="name headline">Docker和WSL2安装以及迁移教程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2025-02-23T06:32:27.402Z" title="发表于 2025-02-23 06:32:27">2025-02-23</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2025-02-23T07:21:19.224Z" title="更新于 2025-02-23 07:21:19">2025-02-23</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">1.8k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为安徽"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>安徽</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src=""></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://example.com/2025/02/23/Docker%E7%94%A8%E6%B3%95/"><header><a class="post-meta-categories" href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url">教程</a><a class="post-meta-categories" href="/categories/Docker/" itemprop="url">Docker</a><a href="/tags/Docker/" tabindex="-1" itemprop="url">Docker</a><a href="/tags/WSL2/" tabindex="-1" itemprop="url">WSL2</a><h1 id="CrawlerTitle" itemprop="name headline">Docker和WSL2安装以及迁移教程</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">FTDRTD</span><time itemprop="dateCreated datePublished" datetime="2025-02-23T06:32:27.402Z" title="发表于 2025-02-23 06:32:27">2025-02-23</time><time itemprop="dateCreated datePublished" datetime="2025-02-23T07:21:19.224Z" title="更新于 2025-02-23 07:21:19">2025-02-23</time></header><h2 id="Docker先决条件"><a href="#Docker先决条件" class="headerlink" title="Docker先决条件"></a>Docker先决条件</h2><ul>
+<li>确保计算机运行的是 Windows 10（<a href="">已更新到版本 2004</a> 的内部版本 18362 或更高版本）或Windows 11。</li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tianmingzh/articles/15861642.html">安装 WSL，并为在 WSL 2 中运行的 Linux 发行版设置用户名和密码</a>。</li>
+<li>为了避免与在Docker Desktop上使用WSL 2发生任何潜在冲突，在安装Docker Desktop之前，必须卸载直接通过Linux发行版安装的任何早期版本的Docker Engine和CLI。</li>
+</ul>
+<h2 id="WSL2安装注意事项"><a href="#WSL2安装注意事项" class="headerlink" title="WSL2安装注意事项"></a><strong>WSL2安装注意事项</strong></h2><ul>
+<li><p>如果 <strong>wsl –install</strong> 命令不起作用，可能是“虚拟机平台”没启用。去“控制面板 &gt; 程序 &gt; 启用或关闭 Windows 功能”，勾选“虚拟机平台”和“Windows 子系统支持 Linux”，然后重启。</p>
+</li>
+<li><p>硬件需要支持虚拟化（可以在 BIOS 中开启，比如 Intel VT-x 或 AMD-V）。</p>
+</li>
+<li><p>可使用以下命令一键开启所需功能,然后手动重新启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux, VirtualMachinePlatform -NoRestart</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>Microsoft-Windows-Subsystem-Linux</strong>：启用 WSL。</p>
+</li>
+<li><p><strong>VirtualMachinePlatform</strong>：启用 WSL2 所需的虚拟化支持。</p>
+</li>
+<li><p><strong>-NoRestart</strong>：避免立即重启（不过建议完成后手动重启）。</p>
+</li>
+</ul>
+<h2 id="安装WSL2"><a href="#安装WSL2" class="headerlink" title="安装WSL2"></a>安装WSL2</h2><ol>
+<li>在CMD或PowerShell输入:</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --install</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果这是第一次安装 WSL，这个命令会自动启用 WSL 并安装默认的 Linux 发行版（通常是 Ubuntu）。完成后需要重启电脑。</li>
+</ul>
+<ol start="2">
+<li><p><strong>确保 WSL2 是默认版本</strong> 重启后，再次打开 PowerShell，输入：</p>
+<p><code>wsl --set-default-version 2</code></p>
+</li>
+</ol>
+<ul>
+<li>这会将 WSL2 设置为默认版本，而不是 WSL1。</li>
+</ul>
+<ol start="3">
+<li><strong>安装 Linux 发行版</strong></li>
+</ol>
+<ul>
+<li>打开 Microsoft Store，搜索你喜欢的 Linux 发行版，比如 Ubuntu、Debian 或 Kali。</li>
+<li>点击“获取”并安装。安装完成后，启动它，会让你设置一个用户名和密码。</li>
+</ul>
+<ol start="4">
+<li><strong>检查安装是否成功</strong> 在 PowerShell 或命令行输入：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li><p>这会列出你安装的发行版和它们的版本。如果显示 “2”，说明 WSL2 运行正常。</p>
+<p>5.<strong>更新 WSL</strong> 如果需要更新 WSL，输入:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --update</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="安装WSL2成功之后-如何将WSL2迁移到任意盘符"><a href="#安装WSL2成功之后-如何将WSL2迁移到任意盘符" class="headerlink" title="安装WSL2成功之后,如何将WSL2迁移到任意盘符"></a>安装WSL2成功之后,如何将WSL2迁移到任意盘符</h2><p>WSL2 默认安装在 C 盘，我们可以通过以下步骤迁移安装位置</p>
+<p>通过以下命令列出已安装的 Linux 发行版：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure>
+
+<p>如果运行状态为 Running，需先通过以下命令关闭：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --shutdown</span><br></pre></td></tr></table></figure>
+
+<p>然后我们通过以下命令将 Ubuntu导出为 tar 文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --export Ubuntu e:\Ubuntu.tar</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：<br>wsl –export Distribution Name FileName<br>Distribution 为目标 Linux 发行版的名称，我安装的为： <code>Ubuntu</code></p>
+<p>FileName 为导出的文件名，这里我导出到 <code>e:\Ubuntu.tar</code></p>
+</blockquote>
+<p>导出成功后，可以在导出的路径下看到导出的 tar 文件：<br>然后注销并卸载 Ubuntu</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --unregister Ubuntu</span><br></pre></td></tr></table></figure>
+
+<p>再次查看已安装的 Linux 发行版：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 Ubuntu已经注销并卸载了<br>然后将Ubuntu导入到新位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --import Ubuntu E:\ubuntu E:\Ubuntu.tar</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意:<br>wsl –import Distribution Name InstallLocation FileName</p>
+<p>Distribution Name 为目标 Linux 发行版的名称，我安装的为： <code>Ubuntu-22.04</code></p>
+<p>InstallLocation 为要安装到的新位置，这里我安装到：<code>E:\ubuntu2204</code></p>
+<p>FileName 为要导入的文件名，这里导入刚才导出的 <code>e:\Ubuntu-22.04.tar</code></p>
+</blockquote>
+<p>导入完成后，再次查看已安装的 Linux 发行版：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 Ubuntu已成功导入到新的位置</p>
+<p>最后需要更改一下默认用户：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ubuntu config --default-user lin</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：DistributionName config –default-user Username</p>
+<p>Distribution Name 为目标 Linux 发行版的名称，我安装的为： <code>Ubuntu-22.04</code>，命令里要写为：<code>Ubuntu2204 </code></p>
+<p>Username 为 WSL 发行版中存在的用户名，在设置 Linux 用户名和密码时我创建的用户为：<code>lin</code> ，所以命令里的 Username 这里就为：<code>lin</code></p>
+</blockquote>
+<p>以上步骤完成后，看到指定安装的新位置下有 <code>.vhdx</code> 文件说明迁移成功</p>
+<h2 id="通过命令行安装-Docker-Desktop"><a href="#通过命令行安装-Docker-Desktop" class="headerlink" title="通过命令行安装 Docker Desktop"></a>通过命令行安装 Docker Desktop</h2><p>在 <code>Docker Desktop Installer.exe</code> 所在的目录下运行 Windows 命令提示符<br>在命令行中输入以下命令来进行 Docker Desktop 的安装：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">start</span> /w &quot;&quot; &quot;Docker Desktop Installer.exe&quot; install --installation-<span class="built_in">dir</span>=D:\Docker</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：Docker Desktop 默认安装位置为：<code>C:\Program Files\Docker\Docker</code><br>这里通过在 install 命令后添加 <code>--installation-dir=&lt;path&gt;</code> 参数来修改 Docker Desktop 的默认安装位置，其中 <code>&lt;path&gt;</code> 为指定的安装路径，这里我指定的安装位置为：<code>D:\Docker</code>。</p>
+</blockquote>
+<p>或PowerShell</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Start-Process</span> <span class="literal">-FilePath</span> <span class="string">&quot;Docker Desktop Installer.exe&quot;</span> <span class="literal">-ArgumentList</span> <span class="string">&quot;install --installation-dir=D:\Docker&quot;</span> <span class="literal">-Wait</span> <span class="literal">-NoNewWindow</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ol>
+<li>Start-Process<ul>
+<li>PowerShell 中用于启动进程的命令，相当于 CMD 的 start。</li>
+</ul>
+</li>
+<li>-FilePath “Docker Desktop Installer.exe”<ul>
+<li>指定要运行的可执行文件，和 CMD 中的直接调用一致。</li>
+</ul>
+</li>
+<li>-ArgumentList “install –installation-dir&#x3D;E:\develop\Docker”<ul>
+<li>将参数传递给安装程序，等价于 CMD 中的 install –installation-dir&#x3D;E:\develop\Docker。</li>
+</ul>
+</li>
+<li>-Wait<ul>
+<li>对应 CMD 的 &#x2F;w，表示等待安装程序完成后再继续执行后续命令。</li>
+</ul>
+</li>
+<li>-NoNewWindow<ul>
+<li>避免在新窗口中运行，保持与 CMD 的行为一致（CMD 默认就在当前窗口运行）。</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<p>借助 Docker Desktop for Windows 中支持的 WSL 2 后端，可以在基于 Linux 的开发环境中工作并生成基于 Linux 的容器，并在 Windows 上的 Microsoft Edge 浏览器中运行容器。</p>
+<p>若要安装 Docker（在已<a target="_blank" rel="noopener" href="https://www.cnblogs.com/tianmingzh/articles/15861642.html">安装 WSL</a> 之后）：</p>
+<ol>
+<li>按照通常的安装说明安装Docker Desktop。如果您正在运行受支持的系统，Docker Desktop会在安装期间提示您启用WSL 2(也有可能不提示，安装完成可以自己勾选)。读取屏幕上显示的信息，并启用WSL 2继续。</li>
+<li>从Windows“开始”菜单启动Docker Desktop。</li>
+<li>从Docker菜单中，选择<strong>Settings &gt; General</strong>。</li>
+<li>选中<strong>Use the WSL 2 based engine</strong>复选框(如果在支持WSL 2的系统上安装了Docker Desktop，则默认情况下将启用此选项)。</li>
+<li>单击<strong>Apply &amp; Restart</strong>。</li>
+<li>Docker Desktop重新启动后，进入<strong>Settings</strong> &gt; <strong>Resources</strong> &gt; <strong>WSL Integration</strong>。<br>Docker WSL集成将在默认WSL发行版上启用。</li>
+<li>单击<strong>Apply &amp; Restart。</strong></li>
+</ol>
+<h2 id="Docker-换源"><a href="#Docker-换源" class="headerlink" title="Docker 换源"></a>Docker 换源</h2><p>国内从 DockerHub 拉取镜像有时会遇到困难，此时可以配置镜像加速器。Docker 官方和国内很多云服务商都提供了国内加速器服务，这里以阿里云镜像为例，获取地址：<a target="_blank" rel="noopener" href="https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors">https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors</a>，进入后登录，左侧菜单选中镜像加速器就可以看到你的专属地址了：<br>然后复制到docker的设置中。<br>单击<strong>Apply &amp; Restart。</strong><br>在命令行执行 <strong>docker info</strong>，如果从结果中看到了如下内容，说明配置成功。</p>
+<h2 id="Docker-Desktop-WSL2-修改镜像存储位置"><a href="#Docker-Desktop-WSL2-修改镜像存储位置" class="headerlink" title="Docker Desktop(WSL2)修改镜像存储位置"></a>Docker Desktop(WSL2)修改镜像存储位置</h2><p>Docker Desktop WSL2 默认会安装2个子系统，使用命令 <code>wsl -l -v --all&lt;span&gt; &lt;/span&gt;</code>查看。</p>
+<p><em>docker-desktop</em>是存放程序的，<em>docker-desktop-data</em>是存放镜像的，这两个wsl子系统都是默认放在系统盘的。<br>如何转移？</p>
+<p>退出Docker Desktop</p>
+<p>关闭WSL</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="attr">--shutdown</span></span><br></pre></td></tr></table></figure>
+
+<p>将子系统导出为tar文件</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">wsl</span> --<span class="meta">export</span> docker-desktop D:\docker-desktop\docker-desktop.tar</span><br><span class="line"><span class="symbol">wsl</span> --<span class="meta">export</span> docker-desktop-<span class="meta">data</span> D:\docker-desktop\docker-desktop-<span class="meta">data</span>.tar</span><br></pre></td></tr></table></figure>
+
+<p>注销子系统</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="attr">--unregister</span> docker-desktop</span><br><span class="line">wsl <span class="attr">--unregister</span> docker-desktop-data</span><br></pre></td></tr></table></figure>
+
+<p>使用新路径导入子系统</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wsl --<span class="keyword">import</span> docker-desktop D:\docker-desktop\distro D:\docker-desktop\docker-desktop.tar --version <span class="number">2</span></span><br><span class="line">wsl --<span class="keyword">import</span> docker-desktop-<span class="keyword">data</span> D:\docker-desktop\<span class="keyword">data</span> D:\docker-desktop\docker-desktop-<span class="keyword">data</span>.tar --version <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/imges/CN5.png" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/imges/CN5.png" title="头像" alt="头像"></a><div class="post-copyright__author_name">FTDRTD</div><div class="post-copyright__author_desc"></div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://example.com/2025/02/23/Docker%E7%94%A8%E6%B3%95/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://example.com/2025/02/23/Docker%E7%94%A8%E6%B3%95/')">Docker和WSL2安装以及迁移教程</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"></div><div class="shareRight"></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">FTDRTD的博客</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/Docker/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>Docker<span class="tagsPageCount">2</span></a><a class="post-meta__box__tags" href="/tags/WSL2/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>WSL2<span class="tagsPageCount">1</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="/imges/CN5.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/02/03/Scoop%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Scoop使用说明</div></div></a></div><div class="next-post pull-right"><a href="/2025/03/01/%E4%BD%BF%E7%94%A8%20Scoop%20%E5%9C%A8%20Windows%20%E4%B8%8A%E5%AE%89%E8%A3%85%E5%92%8C%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">使用 Scoop 在 Windows 上安装和管理软件</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/2025/01/02/10/" title="Win11 安装 Docker Desktop 和 WSL2 并进行安装位置迁移"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-01-02</div><div class="title">Win11 安装 Docker Desktop 和 WSL2 并进行安装位置迁移</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/imges/CN5.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description"></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker%E5%85%88%E5%86%B3%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">Docker先决条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WSL2%E5%AE%89%E8%A3%85%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">2.</span> <span class="toc-text">WSL2安装注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85WSL2"><span class="toc-number">3.</span> <span class="toc-text">安装WSL2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85WSL2%E6%88%90%E5%8A%9F%E4%B9%8B%E5%90%8E-%E5%A6%82%E4%BD%95%E5%B0%86WSL2%E8%BF%81%E7%A7%BB%E5%88%B0%E4%BB%BB%E6%84%8F%E7%9B%98%E7%AC%A6"><span class="toc-number">4.</span> <span class="toc-text">安装WSL2成功之后,如何将WSL2迁移到任意盘符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%AE%89%E8%A3%85-Docker-Desktop"><span class="toc-number">5.</span> <span class="toc-text">通过命令行安装 Docker Desktop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-%E6%8D%A2%E6%BA%90"><span class="toc-number">6.</span> <span class="toc-text">Docker 换源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-Desktop-WSL2-%E4%BF%AE%E6%94%B9%E9%95%9C%E5%83%8F%E5%AD%98%E5%82%A8%E4%BD%8D%E7%BD%AE"><span class="toc-number">7.</span> <span class="toc-text">Docker Desktop(WSL2)修改镜像存储位置</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/15/%E4%BD%BF%E7%94%A8%20Fnm%20%E5%AE%89%E8%A3%85%20Node/" title="使用 fnm 安装 Node.js 并将 pnpm 设为默认包管理器">使用 fnm 安装 Node.js 并将 pnpm 设为默认包管理器</a><time datetime="2026-01-15T01:49:09.824Z" title="发表于 2026-01-15 01:49:09">2026-01-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/18/Python%E7%9A%84%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E6%9C%80%E5%A5%BD%E5%B7%A5%E5%85%B7-Uv/" title="Python的依赖管理最好工具-Uv">Python的依赖管理最好工具-Uv</a><time datetime="2025-12-18T01:50:48.474Z" title="发表于 2025-12-18 01:50:48">2025-12-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/10/Kali-Chinese/" title="Kali Linux设置中文教程">Kali Linux设置中文教程</a><time datetime="2025-09-10T00:51:41.434Z" title="发表于 2025-09-10 00:51:41">2025-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/16/sing%20box%E6%90%AD%E5%BB%BA%E8%AF%A6%E7%BB%86%E5%9B%BE%E6%96%87%E6%95%99%E7%A8%8B/" title="Sing-box搭建详细图文教程--鸣谢233boy大佬">Sing-box搭建详细图文教程--鸣谢233boy大佬</a><time datetime="2025-07-16T11:24:54.993Z" title="发表于 2025-07-16 11:24:54">2025-07-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/13/%E4%BD%BF%E7%94%A8%20KernelSU%20Next%20+%20Susfs%20%E8%BF%9B%E8%A1%8C%20Android%20%E8%AE%BE%E5%A4%87%20Root/" title="使用 KernelSU Next + Susfs 进行 Android 设备 Root">使用 KernelSU Next + Susfs 进行 Android 设备 Root</a><time datetime="2025-07-13T12:24:00.541Z" title="发表于 2025-07-13 12:24:00">2025-07-13</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">49</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">10</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/ArchLiunx/" style="font-size: 0.88rem;">ArchLiunx<sup>6</sup></a><a href="/tags/Bug/" style="font-size: 0.88rem;">Bug<sup>1</sup></a><a href="/tags/Chinese/" style="font-size: 0.88rem;">Chinese<sup>1</sup></a><a href="/tags/Cmder/" style="font-size: 0.88rem;">Cmder<sup>1</sup></a><a href="/tags/Docker/" style="font-size: 0.88rem;">Docker<sup>2</sup></a><a href="/tags/GitHub-Actions/" style="font-size: 0.88rem;">GitHub Actions<sup>1</sup></a><a href="/tags/Hexo/" style="font-size: 0.88rem;">Hexo<sup>2</sup></a><a href="/tags/Kali-Linux/" style="font-size: 0.88rem;">Kali Linux<sup>1</sup></a><a href="/tags/Manjaro/" style="font-size: 0.88rem;">Manjaro<sup>1</sup></a><a href="/tags/Ollama/" style="font-size: 0.88rem;">Ollama<sup>1</sup></a><a href="/tags/Pixel/" style="font-size: 0.88rem;">Pixel<sup>1</sup></a><a href="/tags/Python/" style="font-size: 0.88rem;">Python<sup>1</sup></a><a href="/tags/SSH/" style="font-size: 0.88rem;">SSH<sup>2</sup></a><a href="/tags/Scoop/" style="font-size: 0.88rem;">Scoop<sup>2</sup></a><a href="/tags/Telegram/" style="font-size: 0.88rem;">Telegram<sup>1</sup></a><a href="/tags/Ubuntu/" style="font-size: 0.88rem;">Ubuntu<sup>1</sup></a><a href="/tags/Uv/" style="font-size: 0.88rem;">Uv<sup>1</sup></a><a href="/tags/VS-Code/" style="font-size: 0.88rem;">VS Code<sup>1</sup></a><a href="/tags/WSL/" style="font-size: 0.88rem;">WSL<sup>1</sup></a><a href="/tags/WSL2/" style="font-size: 0.88rem;">WSL2<sup>1</sup></a><a href="/tags/Windows/" style="font-size: 0.88rem;">Windows<sup>1</sup></a><a href="/tags/Wine/" style="font-size: 0.88rem;">Wine<sup>2</sup></a><a href="/tags/Wsl2/" style="font-size: 0.88rem;">Wsl2<sup>1</sup></a><a href="/tags/fcitx5/" style="font-size: 0.88rem;">fcitx5<sup>1</sup></a><a href="/tags/liunx/" style="font-size: 0.88rem;">liunx<sup>1</sup></a><a href="/tags/pacman/" style="font-size: 0.88rem;">pacman<sup>1</sup></a><a href="/tags/pip/" style="font-size: 0.88rem;">pip<sup>1</sup></a><a href="/tags/timeshift/" style="font-size: 0.88rem;">timeshift<sup>1</sup></a><a href="/tags/yay/" style="font-size: 0.88rem;">yay<sup>1</sup></a><a href="/tags/%E4%B8%AD%E6%96%87/" style="font-size: 0.88rem;">中文<sup>2</sup></a><a href="/tags/%E4%BB%A3%E7%90%86/" style="font-size: 0.88rem;">代理<sup>1</sup></a><a href="/tags/%E5%8E%9F%E7%94%9F%E5%AE%89%E5%8D%93/" style="font-size: 0.88rem;">原生安卓<sup>1</sup></a><a href="/tags/%E6%8E%A8%E8%8D%90/" style="font-size: 0.88rem;">推荐<sup>1</sup></a><a href="/tags/%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">搭建教程<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">教程<sup>8</sup></a><a href="/tags/%E7%BD%91%E7%AB%99/" style="font-size: 0.88rem;">网站<sup>1</sup></a><a href="/tags/%E8%84%9A%E6%9C%AC/" style="font-size: 0.88rem;">脚本<sup>1</sup></a><a href="/tags/%E8%BE%93%E5%85%A5%E6%B3%95/" style="font-size: 0.88rem;">输入法<sup>1</sup></a><a href="/tags/%E9%82%AE%E7%AE%B1%E9%85%8D%E7%BD%AE/" style="font-size: 0.88rem;">邮箱配置<sup>1</sup></a><a href="/tags/%E9%AA%8C%E8%AF%81/" style="font-size: 0.88rem;">验证<sup>1</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("04/01/2021 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2020 By 安知鱼 V1.6.14",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 FTDRTD 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script async data-pjax src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.1/bubble/bubble.js"></script><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
