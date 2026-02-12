@@ -2,6 +2,10 @@
 layout: post
 title: Fish Shell 终极配置指南
 subtitle: 从安装到全栈开发环境的完整教程
+author: SKIPPINGpetticoatconvent
+categories: [Shell, Development]
+tags: [fish, shell, terminal, development]
+date: 2026-02-12 00:00:00 +0800
 ---
 
 # Fish Shell 终极配置指南：从安装到全栈开发环境

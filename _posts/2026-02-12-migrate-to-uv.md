@@ -2,6 +2,10 @@
 layout: post
 title: 迁移到 uv：Python 包管理的革命性升级
 subtitle: 告别 pip 和 venv，拥抱极速 Python 开发体验
+author: SKIPPINGpetticoatconvent
+categories: [Python, Package Management]
+tags: [uv, python, pip, package-management, development]
+date: 2026-02-12 00:00:00 +0800
 ---
 
 # 迁移到 uv：Python 包管理的革命性升级
