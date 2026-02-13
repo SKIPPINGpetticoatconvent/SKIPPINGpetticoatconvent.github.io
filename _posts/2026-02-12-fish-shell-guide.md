@@ -106,7 +106,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 安装后，在 `~/.config/fish/config.fish` 中添加：
 
-```fish
+```bash
 fish_add_path $HOME/.cargo/bin
 ```
 
@@ -114,7 +114,7 @@ fish_add_path $HOME/.cargo/bin
 
 安装 Go 后（假设安装在 `/usr/local/go`），配置路径：
 
-```fish
+```bash
 set -gx GOPATH $HOME/go
 fish_add_path /usr/local/go/bin $GOPATH/bin
 ```
@@ -129,7 +129,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 `uv` 通常会自动尝试配置 Fish 路径，如果没有，请手动添加：
 
-```fish
+```bash
 fish_add_path $HOME/.local/bin
 ```
 
@@ -143,7 +143,7 @@ curl -fsSL https://fnm.vercel.app/install | bash
 
 在 `config.fish` 中添加初始化命令：
 
-```fish
+```bash
 fnm env --use-on-cd | source
 ```
 
@@ -155,7 +155,7 @@ curl -fsSL https://bun.sh/install | bash
 
 配置路径：
 
-```fish
+```bash
 set -gx BUN_INSTALL "$HOME/.bun"
 fish_add_path $BUN_INSTALL/bin
 ```
@@ -166,7 +166,7 @@ fish_add_path $BUN_INSTALL/bin
 
 你的配置文件通常位于 `~/.config/fish/config.fish`。以下是一个整合了上述工具的配置模板：
 
-```fish
+```bash
 if status is-interactive
     # 保持默认的问候语为空
     set -g fish_greeting ""
@@ -208,7 +208,7 @@ end
 1. **安装**: `curl -sS https://starship.rs/install.sh | sh`
 2. **启用**: 在 `config.fish` 末尾添加：
 
-```fish
+```bash
 starship init fish | source
 ```
 
