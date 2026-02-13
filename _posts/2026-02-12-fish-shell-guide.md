@@ -103,10 +103,24 @@ Fish 的环境变量配置与 Bash 不同，通常建议使用 `fish_add_path` �
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-安装后，在 `~/.config/fish/config.fish` 中添加：
+使用官方脚本安装后，Cargo 默认生成的 env.fish 脚本在某些 IDE 环境下可能无法被正确识别。
+
+推荐配置方式：
+
+不要依赖 source ~/.cargo/env.fish，而是直接使用 Fish 内置的路径管理命令：
 
 ```bash
-fish_add_path $HOME/.cargo/bin
+# 推荐：在终端执行一次即可永久生效（全局变量）
+set -Ux fish_user_paths $HOME/.cargo/bin $fish_user_paths
+```
+
+或者在 ~/.config/fish/config.fish 中添加：
+
+```bash
+# 确保路径存在再添加，避免报错
+if test -d $HOME/.cargo/bin
+    fish_add_path $HOME/.cargo/bin
+end
 ```
 
 ### Go
@@ -214,3 +228,27 @@ starship init fish | source
 现在，重启你的终端，享受飞一般的开发体验吧！
 
 ---
+
+## 7. 常见问题与 IDE 协作
+
+解决 VS Code / rust-analyzer 路径识别问题
+如果你在 VS Code 中遇到 rust-analyzer 报错（例如不认识新版本 Rust 的 edition = "2024"），通常是因为 VS Code 没能继承 Fish 的环境变量，转而调用了系统自带的旧版工具链。
+解决方案：
+在 VS Code 的 settings.json 中手动注入正确的 `PATH`：
+
+```json
+{
+  "rust-analyzer.cargo.extraEnv": {
+    "PATH": "/home/your_user/.cargo/bin:/usr/local/bin:/usr/bin:/bin"
+  },
+  // 强制指向 rustup 安装的最新二进制文件
+  "rust-analyzer.server.path": "~/.cargo/bin/rust-analyzer"
+}
+```
+
+彻底清理旧版干扰
+如果系统中存在旧版 rust-analyzer（如通过 apt 安装的），可能会导致版本冲突。建议将其卸载：
+
+```bash
+sudo apt remove rust-analyzer
+```
