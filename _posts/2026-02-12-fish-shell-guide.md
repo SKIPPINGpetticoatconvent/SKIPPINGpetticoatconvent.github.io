@@ -20,7 +20,6 @@ Fish (Friendly Interactive Shell) 是一个极其注重开箱即用体验的 she
 
 ```bash
 brew install fish
-
 ```
 
 - **Ubuntu / Debian**:
@@ -28,7 +27,6 @@ brew install fish
 ```bash
 sudo apt update
 sudo apt install fish
-
 ```
 
 ### 设置为默认 Shell
@@ -39,21 +37,18 @@ sudo apt install fish
 
 ```bash
 which fish
-
 ```
 
 2. **将 fish 添加到可信 shell 列表**:
 
 ```bash
 echo (which fish) | sudo tee -a /etc/shells
-
 ```
 
 3. **修改默认 shell**:
 
 ```bash
 chsh -s (which fish)
-
 ```
 
 ---
@@ -64,7 +59,6 @@ chsh -s (which fish)
 
 ```bash
 curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
-
 ```
 
 ---
@@ -82,7 +76,6 @@ curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fi
 
 ```bash
 fisher install PatrickF1/fzf.fish
-
 ```
 
 > **功能**：使用 `Ctrl+R` 搜索历史，`Ctrl+Alt+F` 搜索文件。
@@ -93,7 +86,6 @@ fisher install PatrickF1/fzf.fish
 
 ```bash
 fisher install jethrokuan/z
-
 ```
 
 > **用法**：`z your_dir_name` 即可快速直达。
@@ -110,14 +102,12 @@ Fish 的环境变量配置与 Bash 不同，通常建议使用 `fish_add_path` �
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
 ```
 
 安装后，在 `~/.config/fish/config.fish` 中添加：
 
 ```fish
 fish_add_path $HOME/.cargo/bin
-
 ```
 
 ### Go
@@ -127,7 +117,6 @@ fish_add_path $HOME/.cargo/bin
 ```fish
 set -gx GOPATH $HOME/go
 fish_add_path /usr/local/go/bin $GOPATH/bin
-
 ```
 
 ### uv (Python 管理器)
@@ -136,14 +125,12 @@ Astral 出品的极速 Python 包管理工具：
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
-
 ```
 
 `uv` 通常会自动尝试配置 Fish 路径，如果没有，请手动添加：
 
 ```fish
 fish_add_path $HOME/.local/bin
-
 ```
 
 ### fnm (Node.js 版本管理)
@@ -152,21 +139,18 @@ fish_add_path $HOME/.local/bin
 
 ```bash
 curl -fsSL https://fnm.vercel.app/install | bash
-
 ```
 
 在 `config.fish` 中添加初始化命令：
 
 ```fish
 fnm env --use-on-cd | source
-
 ```
 
 ### Bun (JavaScript Runtime)
 
 ```bash
 curl -fsSL https://bun.sh/install | bash
-
 ```
 
 配置路径：
@@ -174,7 +158,6 @@ curl -fsSL https://bun.sh/install | bash
 ```fish
 set -gx BUN_INSTALL "$HOME/.bun"
 fish_add_path $BUN_INSTALL/bin
-
 ```
 
 ---
@@ -214,7 +197,6 @@ if status is-interactive
     alias g='git'
     alias vim='nvim'
 end
-
 ```
 
 ---
@@ -228,7 +210,6 @@ end
 
 ```fish
 starship init fish | source
-
 ```
 
 现在，重启你的终端，享受飞一般的开发体验吧！
