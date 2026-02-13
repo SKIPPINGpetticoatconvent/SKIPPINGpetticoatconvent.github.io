@@ -238,11 +238,8 @@ starship init fish | source
 
 ```json
 {
-  "rust-analyzer.cargo.extraEnv": {
-    "PATH": "/home/your_user/.cargo/bin:/usr/local/bin:/usr/bin:/bin"
-  },
-  // 强制指向 rustup 安装的最新二进制文件
-  "rust-analyzer.server.path": "~/.cargo/bin/rust-analyzer"
+  "rust-analyzer.server.path": "~/.cargo/bin/rust-analyzer",
+  "rust-analyzer.linkedProjects": ["path/to/your/project/Cargo.toml"]
 }
 ```
 
