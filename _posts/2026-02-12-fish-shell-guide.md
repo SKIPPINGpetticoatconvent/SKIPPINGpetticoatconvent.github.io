@@ -16,47 +16,45 @@ Fish (Friendly Interactive Shell) 是一个极其注重开箱即用体验的 she
 
 ### 操作系统安装命令
 
-* **macOS**:
+- **macOS**:
+
 ```bash
 brew install fish
 
 ```
 
+- **Ubuntu / Debian**:
 
-* **Ubuntu / Debian**:
 ```bash
 sudo apt update
 sudo apt install fish
 
 ```
 
-
-
 ### 设置为默认 Shell
 
 安装完成后，建议将 Fish 设置为默认 shell：
 
 1. **查看 fish 路径**:
+
 ```bash
 which fish
 
 ```
 
-
 2. **将 fish 添加到可信 shell 列表**:
+
 ```bash
 echo (which fish) | sudo tee -a /etc/shells
 
 ```
 
-
 3. **修改默认 shell**:
+
 ```bash
 chsh -s (which fish)
 
 ```
-
-
 
 ---
 
@@ -77,8 +75,8 @@ curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fi
 
 首先确保系统中已安装 `fzf` 二进制文件：
 
-* **macOS**: `brew install fzf`
-* **Ubuntu**: `sudo apt install fzf`
+- **macOS**: `brew install fzf`
+- **Ubuntu**: `sudo apt install fzf`
 
 然后安装 Fish 插件以获得更好的集成：
 
@@ -191,18 +189,18 @@ if status is-interactive
     set -g fish_greeting ""
 
     # --- 环境变量与路径 ---
-    
+
     # Rust
     fish_add_path $HOME/.cargo/bin
-    
+
     # Go
     set -gx GOPATH $HOME/go
     fish_add_path /usr/local/go/bin $GOPATH/bin
-    
+
     # Bun
     set -gx BUN_INSTALL "$HOME/.bun"
     fish_add_path $BUN_INSTALL/bin
-    
+
     # Python (uv)
     fish_add_path $HOME/.local/bin
 
@@ -227,12 +225,11 @@ end
 
 1. **安装**: `curl -sS https://starship.rs/install.sh | sh`
 2. **启用**: 在 `config.fish` 末尾添加：
+
 ```fish
 starship init fish | source
 
 ```
-
-
 
 现在，重启你的终端，享受飞一般的开发体验吧！
 

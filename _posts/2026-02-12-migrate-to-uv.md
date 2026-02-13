@@ -15,17 +15,20 @@ date: 2026-02-12 00:00:00 +0800
 ## 1. 为什么选择 uv？
 
 ### 🚀 极速性能
+
 - **包安装速度**：比 pip 快 10-100 倍
 - **依赖解析**：毫秒级解析，即使面对复杂依赖
 - **冷启动**：无需等待，即开即用
 
 ### 🎯 一体化解决方案
+
 - **包管理**：替代 pip
 - **虚拟环境**：替代 venv/conda
 - **项目管理**：替代 poetry/pip-tools
 - **Python 版本管理**：替代 pyenv
 
 ### 🔒 兼容性保证
+
 - **100% pip 兼容**：无缝迁移现有项目
 - **PyPI 支持**：完全支持 Python 包索引
 - **标准工具链**：与现有工具无缝集成
@@ -41,16 +44,19 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ### 包管理器安装
 
 **macOS (Homebrew):**
+
 ```bash
 brew install uv
 ```
 
 **Windows (Scoop):**
+
 ```bash
 scoop install uv
 ```
 
 **Linux (各种发行版):**
+
 ```bash
 # Ubuntu/Debian
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -289,6 +295,7 @@ docs = [
 ### CI/CD 集成
 
 **GitHub Actions:**
+
 ```yaml
 name: CI
 on: [push, pull_request]
@@ -296,18 +303,19 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up uv
-      uses: astral-sh/setup-uv@v3
-      with:
-        version: "latest"
-    - name: Install dependencies
-      run: uv sync
-    - name: Run tests
-      run: uv run pytest
+      - uses: actions/checkout@v4
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
+      - name: Install dependencies
+        run: uv sync
+      - name: Run tests
+        run: uv run pytest
 ```
 
 **Docker:**
+
 ```dockerfile
 FROM python:3.11-slim
 
@@ -360,12 +368,12 @@ export UV_INDEX_URL="https://pypi.tuna.tsinghua.edu.cn/simple/"
 
 ## 9. 性能对比
 
-| 操作 | pip | uv | 提升倍数 |
-|------|-----|----|----------|
-| 安装 Django | 8s | 0.8s | 10x |
-| 安装 100 个包 | 45s | 4s | 11x |
-| 创建虚拟环境 | 3s | 0.1s | 30x |
-| 依赖解析 | 15s | 0.2s | 75x |
+| 操作          | pip | uv   | 提升倍数 |
+| ------------- | --- | ---- | -------- |
+| 安装 Django   | 8s  | 0.8s | 10x      |
+| 安装 100 个包 | 45s | 4s   | 11x      |
+| 创建虚拟环境  | 3s  | 0.1s | 30x      |
+| 依赖解析      | 15s | 0.2s | 75x      |
 
 ## 10. 迁移检查清单
 
@@ -395,4 +403,4 @@ export UV_INDEX_URL="https://pypi.tuna.tsinghua.edu.cn/simple/"
 
 ---
 
-*你有什么 uv 使用经验或迁移故事？欢迎在评论区分享！*
+_你有什么 uv 使用经验或迁移故事？欢迎在评论区分享！_
