@@ -7,9 +7,8 @@ tags: [docker, debian, ubuntu, apt, deb822, trixie, fish-shell]
 date: 2026-02-15 00:00:00 +0800
 ---
 
-# **Debian 和 Ubuntu 上安装 Docker Engine 的完整教程**（更新至 2026 年官方推荐方式）。
-
 **适用系统**：
+
 - Ubuntu：24.04 (Noble LTS)、25.10 (Questing)、22.04 (Jammy LTS)
 - Debian：13 (Trixie)、12 (Bookworm)、11 (Bullseye)
 
@@ -19,7 +18,7 @@ date: 2026-02-15 00:00:00 +0800
 
 ```bash
 # 卸载冲突包
-for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do 
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do
   sudo apt-get remove --purge -y $pkg || true
 done
 
@@ -135,12 +134,12 @@ newgrp docker          # 立即生效，或注销重登录
 
 ### 常见问题快速修复表（基于你的实际报错）
 
-| 错误描述                              | 原因                              | 解决办法                                      |
-|---------------------------------------|-----------------------------------|-----------------------------------------------|
-| Conflicting values set for Signed-By | 同一个源用了不同密钥文件          | 步骤 0 彻底删除所有旧密钥和源文件            |
-| Failed to parse keyring ... No such file | 源指向的 docker.asc 不存在/空    | 重新下载密钥（步骤 1），确认文件存在且有内容  |
-| repository is not signed              | 密钥无效或未正确引用              | 用 deb822 格式 + 确认 Signed-By 路径正确      |
-| sqv returned error code (1)           | trixie 上对坏密钥更严格           | 确保密钥文件非空、非损坏，权限 a+r           |
+| 错误描述                                 | 原因                          | 解决办法                                     |
+| ---------------------------------------- | ----------------------------- | -------------------------------------------- |
+| Conflicting values set for Signed-By     | 同一个源用了不同密钥文件      | 步骤 0 彻底删除所有旧密钥和源文件            |
+| Failed to parse keyring ... No such file | 源指向的 docker.asc 不存在/空 | 重新下载密钥（步骤 1），确认文件存在且有内容 |
+| repository is not signed                 | 密钥无效或未正确引用          | 用 deb822 格式 + 确认 Signed-By 路径正确     |
+| sqv returned error code (1)              | trixie 上对坏密钥更严格       | 确保密钥文件非空、非损坏，权限 a+r           |
 
 如果想用旧的 `.list` 格式（兼容性好，但官方现在推 deb822）：
 
