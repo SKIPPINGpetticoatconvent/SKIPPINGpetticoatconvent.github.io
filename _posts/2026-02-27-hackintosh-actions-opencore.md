@@ -44,9 +44,9 @@ date: 2026-02-27 00:00:00 +0800
 
 ### 1.2 选择系统版本与镜像类型
 
-进入 Actions 页面后，左侧会看到类似下面这样的工作流列表：
+进入 Actions 页面后，左侧会看到一组以 **“Build macOS XXX”** 命名的工作流列表，大致包含（下图为示例界面）：
 
-![macOS-iso-builder Actions 工作流列表](/assets/image-0c040a44-2aac-41a7-b096-e44cee285940.png)
+![macOS-iso-builder Actions 工作流列表]({{ "/assets/images/1.png" | relative_url }})
 
 1. 一般有两类工作流可以用：
    - **01. Build Recovery ISO image**：推荐作为小体积恢复镜像，下载和构建都更快。  
