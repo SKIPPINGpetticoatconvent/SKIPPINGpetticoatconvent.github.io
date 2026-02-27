@@ -262,6 +262,3 @@ USB 映射使用的是：[USBToolBox/tool](https://github.com/USBToolBox/tool)
 - [ ] 将 U 盘 EFI 复制到系统盘 EFI 分区，设置为默认启动  
 
 ---
-
-以上就是基于你目前实践出来的一整套**无 Mac 前提的黑苹果安装流程**，并按博客的形式整理到了 `_posts` 中。后续如果你有更多踩坑经验，可以在这篇文章基础上继续补充，例如：特定主板/CPU 的 ACPI 细节、不同版本 macOS 的稳定性对比等。
-
