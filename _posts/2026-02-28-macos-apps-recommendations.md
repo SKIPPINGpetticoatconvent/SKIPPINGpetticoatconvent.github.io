@@ -20,7 +20,7 @@ date: 2026-02-28 00:00:00 +0800
 - **扩展**：兼容 Firefox 附加组件（AMO）；支持 Floorp View 跨设备同步标签（Mozilla 账户）  
 - **平台**：支持 macOS 10.15+、Apple Silicon 与 Intel  
 
-适合替代 Chrome、Safari 作为主力浏览器。官网下载：[floorp.app](https://floorp.app/)，或 `brew install --cask floorp`；源码 [GitHub](https://github.com/Floorp-Projects/Floorp)。本站 _posts 内另有 [Floorp 性能与隐私配置](/posts/Floorp/) 一文可参考。
+适合替代 Chrome、Safari 作为主力浏览器。官网下载：[floorp.app](https://floorp.app/)，或 `brew install --cask floorp`；源码 [GitHub](https://github.com/Floorp-Projects/Floorp)。具体的介绍参考 [Floorp 性能与隐私配置](/posts/Floorp/)
 
 ---
 
