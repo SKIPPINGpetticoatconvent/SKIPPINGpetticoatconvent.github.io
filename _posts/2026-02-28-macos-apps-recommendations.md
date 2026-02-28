@@ -3,7 +3,7 @@ layout: post
 title: macOS 好用软件推荐
 subtitle: 系统维护、录屏与日常效率工具
 categories: [技术分享, macOS, 软件推荐]
-tags: [macos, onyx, kap, motrix, iina, maccy, keepassxc, 录屏, 系统维护, 下载, 播放器, 剪贴板, 密码管理器]
+tags: [macos, onyx, kap, motrix, iina, maccy, keepassxc, floorp, 录屏, 系统维护, 下载, 播放器, 剪贴板, 密码管理器, 浏览器]
 date: 2026-02-28 00:00:00 +0800
 ---
 
@@ -11,7 +11,18 @@ date: 2026-02-28 00:00:00 +0800
 
 ---
 
-## 系统维护：OnyX
+## 浏览器：Floorp
+
+[**Floorp**](https://floorp.app/) 是基于 Firefox（Gecko）的**免费开源**浏览器（MPL 2.0），注重隐私与可定制：
+
+- **界面**：侧栏、垂直/多行标签、工作区、Web 面板等可大幅自定义  
+- **隐私与追踪**：内置追踪保护（标准 / 严格 / 自定义），支持 `about:config` 细调  
+- **扩展**：兼容 Firefox 附加组件（AMO）；支持 Floorp View 跨设备同步标签（Mozilla 账户）  
+- **平台**：支持 macOS 10.15+、Apple Silicon 与 Intel  
+
+适合替代 Chrome、Safari 作为主力浏览器。官网下载：[floorp.app](https://floorp.app/)，或 `brew install --cask floorp`；源码 [GitHub](https://github.com/Floorp-Projects/Floorp)。本站 _posts 内另有 [Floorp 性能与隐私配置](/posts/Floorp/) 一文可参考。
+
+---
 
 [**OnyX**](https://www.titanium-software.fr/en/onyx.html) 是 Titanium Software 出的**系统多功能维护工具**，可用来：
 
