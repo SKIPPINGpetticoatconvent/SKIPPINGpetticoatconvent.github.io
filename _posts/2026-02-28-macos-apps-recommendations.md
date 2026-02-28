@@ -13,14 +13,20 @@ date: 2026-02-28 00:00:00 +0800
 
 ## 浏览器：Floorp
 
-[**Floorp**](https://floorp.app/) 是基于 Firefox（Gecko）的**免费开源**浏览器（MPL 2.0），注重隐私与可定制：
+**Floorp** 是一款基于 **Firefox** 的**免费开源**桌面浏览器，使用与 Firefox 相同的 **Gecko** 引擎。
+
+- **Gecko**：Mozilla 开发的网页渲染与 JavaScript 引擎，Firefox、Waterfox、Floorp 等均基于它；与 Chrome/Edge 使用的 Chromium（Blink 引擎）不同，扩展生态为 Firefox 系（AMO），不兼容 Chrome 扩展。
+- **Gecko 中的 Rust**：近年来 Gecko 大量引入 **Rust** 编写的模块，在保持兼容的前提下提升性能与安全性。典型包括：**WebRender**（Rust 实现的 GPU 加速渲染，多核并行绘制）、**Stylo**（Rust 实现的 CSS 样式计算引擎，并行解析与计算）。二者与多进程架构结合，使 Firefox 系在多核与高分辨率下的渲染与样式性能明显改善，Floorp 作为同一引擎的衍生版同样受益。
+- **定位**：在保留 Firefox 隐私与可定制能力的前提下，增加工作区、侧栏、垂直标签等界面与工作流增强，适合作为主力日常浏览器。
+
+[**Floorp**](https://floorp.app/) 官网：[floorp.app](https://floorp.app/)（MPL 2.0）：
 
 - **界面**：侧栏、垂直/多行标签、工作区、Web 面板等可大幅自定义  
 - **隐私与追踪**：内置追踪保护（标准 / 严格 / 自定义），支持 `about:config` 细调  
 - **扩展**：兼容 Firefox 附加组件（AMO）；支持 Floorp View 跨设备同步标签（Mozilla 账户）  
 - **平台**：支持 macOS 10.15+、Apple Silicon 与 Intel  
 
-适合替代 Chrome、Safari 作为主力浏览器。官网下载：[floorp.app](https://floorp.app/)，或 `brew install --cask floorp`；源码 [GitHub](https://github.com/Floorp-Projects/Floorp)。具体的介绍参考 [Floorp 性能与隐私配置](/posts/Floorp/)
+适合替代 Chrome、Safari 作为主力浏览器。官网下载：[floorp.app](https://floorp.app/)，或 `brew install --cask floorp`；源码 [GitHub](https://github.com/Floorp-Projects/Floorp)。具体的介绍参考 [Floorp 性能与隐私配置](../Floorp/)
 
 ---
 
