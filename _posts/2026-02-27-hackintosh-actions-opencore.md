@@ -264,6 +264,22 @@ export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=$(brew --prefix)/share/zsh-syntax-highligh
 
 保存后执行 `source ~/.zshrc` 或新开终端即可生效。
 
+### 可选：安装 fzf
+
+[fzf](https://github.com/junegunn/fzf) 是模糊查找工具，可配合 Ctrl+R 搜历史、Ctrl+T 选文件、管道过滤等。需要时可安装：
+
+```bash
+brew install fzf
+```
+
+安装完成后执行一次配置脚本（会询问是否把键绑定与补全写入 `.zshrc`，选默认即可）：
+
+```bash
+$(brew --prefix)/opt/fzf/install
+```
+
+按提示完成后，新开终端即可使用。
+
 ---
 
 ## 检查清单
