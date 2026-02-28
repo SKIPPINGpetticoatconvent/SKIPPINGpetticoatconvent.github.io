@@ -190,6 +190,12 @@ EFI 里自带的 USB 配置是通用的，**USB 端口映射需要用户按本�
 
 ---
 
+## 七、显示器亮度无法调节时
+
+安装完成后，如果发现**无法用系统或键盘控制外接/内置显示器亮度**，推荐使用 [MonitorControl](https://github.com/MonitorControl/MonitorControl)：通过 DDC/CI 控制显示器亮度与音量，支持菜单栏滑块、键盘快捷键，适配多显示器。在 GitHub 的 [Releases](https://github.com/MonitorControl/MonitorControl/releases) 下载安装即可。
+
+---
+
 ## 检查清单
 
 ### 镜像与启动盘
