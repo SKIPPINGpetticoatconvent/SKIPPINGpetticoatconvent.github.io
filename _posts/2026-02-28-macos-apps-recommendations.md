@@ -3,7 +3,7 @@ layout: post
 title: macOS 好用软件推荐
 subtitle: 系统维护、录屏与日常效率工具
 categories: [技术分享, macOS, 软件推荐]
-tags: [macos, onyx, kap, motrix, iina, maccy, keepassxc, floorp, 录屏, 系统维护, 下载, 播放器, 剪贴板, 密码管理器, 浏览器]
+tags: [macos, onyx, kap, motrix, iina, maccy, keepassxc, floorp, appcleaner, 录屏, 系统维护, 下载, 播放器, 剪贴板, 密码管理器, 浏览器, 卸载]
 date: 2026-02-28 00:00:00 +0800
 ---
 
@@ -40,6 +40,19 @@ date: 2026-02-28 00:00:00 +0800
 很多原本需要命令行完成的操作，用 OnyX 的图形界面即可完成，适合不想记命令的用户。
 
 **注意**：**每个大版本 macOS 对应一个 OnyX 版本**，必须下载与当前系统匹配的版本（例如 macOS Sequoia 15 用 OnyX 4.8.x，Tahoe 26 用 4.9.x）。官网提供从老版本到最新版的下载，见 [OnyX 官网](https://www.titanium-software.fr/en/onyx.html)。
+
+---
+
+## 卸载 / 清理：AppCleaner
+
+[**AppCleaner**](https://freemacsoft.net/appcleaner/)（FreeMacSoft）是**免费**的卸载工具，用于**彻底移除** Mac 上的应用及其残留文件：
+
+- **拖拽卸载**：把应用拖进窗口即可扫描并列出相关文件（偏好、缓存、Library 等）  
+- **可选删除**：用勾选框选择要删的内容，可保留部分文件（如备份）  
+- **SmartDelete**：应用已进废纸篓时，可检测并清理残留项  
+- **应用列表**：浏览已安装应用、小组件、插件，方便批量清理  
+
+删除前会先移入废纸篓，误删可恢复。支持 Apple Silicon 与 Intel，兼容多代 macOS。官网下载：[freemacsoft.net/appcleaner](https://freemacsoft.net/appcleaner/)，或 `brew install --cask appcleaner`。
 
 ---
 
