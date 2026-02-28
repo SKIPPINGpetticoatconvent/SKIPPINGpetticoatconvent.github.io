@@ -165,6 +165,15 @@ EFI 里自带的 USB 配置是通用的，**USB 端口映射需要用户按本�
    - USB Map 与 NootRX 等 kext 已勾选启用。  
 5. 保存退出，OCAT 会自动按最新 schema 写回 `config.plist`。
 
+### 稳定后精简 boot-args
+
+若系统已运行稳定，可在 `config.plist` 的 **NVRAM → Add → 7C436110-AB2A-4BBB-A880-FE41995C9F82 → boot-arg** 中删掉多余参数，**只保留**下面两个即可（用 ProperTree 或 OCAT 编辑均可）。二者均为 AMD 平台常见推荐，用于改善睡眠/唤醒稳定性；若你当前睡眠正常，可先不加，出现异常再加回。
+
+| 参数 | 作用与说明 |
+|------|------------|
+| **dart=0** | 禁用 DART（DMA Remapping Table）。macOS 12+ (Monterey) 引入的 DMA 保护主要面向 Apple Silicon，在 AMD x86 上会干扰 PCIe 设备（USB / NVMe / 显卡）的 DMA，导致睡眠后无法唤醒、USB 丢失或重启崩溃。AMD 芯片组（B550/X570 等）与 macOS 的 DART 兼容性差，社区多数 AMD 用户加 `dart=0` 后睡眠更稳（尤其外接 USB 唤醒）。**测试**：删掉 `dart=0` → 测睡眠/唤醒 → 异常再加回。**风险**：无（仅禁用 DART）。 |
+| **ipc_control_port_options=0** | 修改 IPC（进程间通信）控制端口选项，修复 macOS 12+ 唤醒时 IPC 端口未正确重置导致的卡死或 USB/外接设备失效。AMD Ryzen 5000+ 的电源管理（SMCAMDProcessor）与 macOS IPC 兼容性差，易出现唤醒黑屏或设备断连；社区（r/hackintosh、amd-osx）确认加此参数可解决大量唤醒问题，常与 `dart=0` 搭配使用。**测试**：删掉后多测几次睡眠/唤醒（如 10 次）→ 异常再加回。**风险**：无（仅优化 IPC）。 |
+
 ---
 
 ## 六、BIOS 与首次安装
