@@ -86,6 +86,10 @@ date: 2026-02-27 00:00:00 +0800
 [OpCore-Simplify](https://github.com/lzhoang2801/OpCore-Simplify) 会按本机硬件**自动下载 OpenCore、Kext 并生成 EFI**，用户只需在菜单里选硬件报告、系统版本、显卡方案（如 NootRX）、声卡等，工具会搞定其余配置。**只有 USB 映射需要用户稍后用 USBToolBox 单独做**（见下一节）。  
 （本仓库内实现可参考 `Py/OpCore-Simplify.py`。）
 
+以下动图为在 **Windows** 下运行 OpCore Simplify、生成 EFI 的界面示例：
+
+![OpCore Simplify 生成 EFI 操作动图（Windows 录制）]({{ "/assets/gifs/2.gif" | relative_url }})
+
 ### 启动方式
 
 - **Windows**：`OpCore-Simplify.bat`  
