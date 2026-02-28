@@ -13,9 +13,9 @@ date: 2026-02-27 00:00:00 +0800
 
 - **镜像**：用 GitHub Actions（[macOS-iso-builder](https://github.com/LongQT-sea/macos-iso-builder)）在线从 Apple 拉取并打成可引导镜像  
 - **U 盘**：Rufus 写入 `dmg`，得到基础安装盘  
-- **EFI**：用 [OpCore-Simplify](https://github.com/lzhoang2801/OpCore-Simplify) 按本机硬件生成 OpenCore EFI 骨架  
-- **USB**：用 [USBToolBox/tool](https://github.com/USBToolBox/tool) 做端口映射，替换默认 USB 相关 kext  
-- **配置维护**：用 [ProperTree](https://github.com/corpnewt/ProperTree) 或 [OCAuxiliaryTools（OCAT）](https://github.com/ic005k/OCAuxiliaryTools) 挂载 EFI、校对 `config.plist`  
+- **EFI**：用 [OpCore-Simplify](https://github.com/lzhoang2801/OpCore-Simplify) 按本机硬件生成 OpenCore EFI 骨架——**工具会自动完成下载和配置，用户只需按菜单选系统版本、显卡方案等**  
+- **USB 映射**：**这一步需要用户自己处理**——用 [USBToolBox/tool](https://github.com/USBToolBox/tool) 扫端口、生成 USB Map kext，并替换 EFI 里的默认 USB 文件  
+- **配置维护**：用 [ProperTree](https://github.com/corpnewt/ProperTree) 或 [OCAuxiliaryTools（OCAT）](https://github.com/ic005k/OCAuxiliaryTools) 挂载 EFI、校对 `config.plist`（可选）  
 
 涉及到的仓库建议先 Star，方便后续跟更新：
 
@@ -81,58 +81,40 @@ date: 2026-02-27 00:00:00 +0800
 
 ## 三、OpCore Simplify 生成 EFI
 
-[OpCore-Simplify](https://github.com/lzhoang2801/OpCore-Simplify) 会按本机硬件自动生成 OpenCore EFI 骨架，省去手配 ACPI/Kext 的很多步骤。
+[OpCore-Simplify](https://github.com/lzhoang2801/OpCore-Simplify) 会按本机硬件**自动下载 OpenCore、Kext 并生成 EFI**，用户只需在菜单里选硬件报告、系统版本、显卡方案（如 NootRX）、声卡等，工具会搞定其余配置。**只有 USB 映射需要用户稍后用 USBToolBox 单独做**（见下一节）。  
+（本仓库内实现可参考 `Py/OpCore-Simplify.py`。）
 
 ### 启动方式
 
 - **Windows**：`OpCore-Simplify.bat`  
 - **macOS / Linux**：`OpCore-Simplify.command` 或 `OpCore-Simplify.py`
 
-菜单里我按下面顺序操作：
+主菜单为：
 
-### 扫硬件兼容性并选系统版本
+- **1**：Select Hardware Report（选择硬件报告）  
+- **2**：Select macOS Version（选择系统版本）  
+- **3**：Customize ACPI Patch（自定义 ACPI 补丁）  
+- **4**：Customize Kexts（自定义 Kext，可在此调整显卡/声卡等）  
+- **5**：Customize SMBIOS Model（自定义 SMBIOS）  
+- **6**：Build OpenCore EFI（构建 EFI，会**自动下载**并生成）  
+- **Q**：退出  
 
-1. 在主菜单中选择 **`1`（一般是 Compatibility Checker/硬件兼容性检查）**。  
-2. 在子菜单中选择 **`E`（Export hardware report/导出硬件报告，亦可自动扫描当前机器配置）**：  
-   - 工具会读取 CPU、主板、显卡、声卡等信息，并生成报告。  
-3. 根据扫描结果，工具会给出**支持的 macOS 版本列表**，从中选择你想装的版本（比如从 High Sierra 一直到 Tahoe）。  
+### 推荐操作顺序
 
-> 建议优先选择列表中标记为"推荐"或与你硬件兼容性最好的那几个版本。
-
-### 显卡：RX 6000+ 用 NootRX
-
-当工具弹出显卡相关选项时，如果你使用的是**AMD RX 6000 系列及以上（RDNA 2/更新架构）独显**（如 RX 6600/6700/6800/6900 以及更新型号），  
-请优先选择使用 [NootRX](https://github.com/ChefKissInc/NootRX) 方案，而**不要选择旧实现**。
-
-- 旧实现通常兼容性较差、补丁更复杂。  
-- NootRX 是专门针对 rDNA 2 dGPU 的补丁 kext，维护较新，体验更好。  
-
-记得在后续生成 EFI 时，让工具把 NootRX 一并纳入 Kext 列表。
-
-### 声卡
-
-后面程序会出现声卡相关菜单（如选择 Layout ID），根据你的经验：
-
-- 一般情况下**保持默认选项即可**，不要盲目更改。  
-- 真实使用中如果后续出现没有声音，可以再回来针对性调整 Layout ID。
-
-### 生成 EFI
-
-1. 在前面选好系统版本、显卡补丁、基础 ACPI/Kext 方案后，按照提示继续，通常菜单中会有一个类似 **`6` 的“Build OpenCore EFI”选项**。  
-2. 按下对应数字后，程序会自动：
-   - 下载对应版本的 OpenCorePkg 与常见 kext（Lilu、WhateverGreen 等）。  
-   - 按你的硬件情况生成 ACPI 补丁与 `config.plist`。  
-   - 输出一份完整的 EFI 目录（含 `EFI/OC` 子目录）。
-
-在这一阶段结束后，你已经有了一份**可用但还未定制 USB Map 的 EFI**。  
-这时可以先把 `EFI` 目录复制到 Rufus 制作的安装 U 盘的 EFI 分区里，用这一个 U 盘完成后续所有安装与引导。  
-接下来要结合 USBToolBox 做 USB 端口映射。
+1. 选 **`1`（Select Hardware Report）**。  
+   - **Windows**：输入 **`E`** 可调用 Hardware Sniffer 导出当前机器配置到 `SysReport/Report.json`（并自动加载 ACPI 表）。  
+   - 或直接拖入已有的 `Report.json`。  
+2. 工具会**自动依次**：做兼容性检查 → 让你选择 macOS 版本 → 硬件定制（禁用设备等）→ 选择 SMBIOS → 选择 ACPI 补丁 → **选择所需 Kext（此处选显卡方案、声卡 Layout 等）** → SMBIOS 相关选项。  
+   - **显卡**：AMD RX 6000 系列及以上请选 [NootRX](https://github.com/ChefKissInc/NootRX)，不要选旧实现。**声卡**：一般保持默认 Layout 即可，有问题再回来用菜单 **4** 调整。  
+3. 完成后回到主菜单。如需微调，可再选 **3**（ACPI）、**4**（Kext）、**5**（SMBIOS）。  
+4. 选 **`6`（Build OpenCore EFI）**：程序会**自动拉取** OpenCore 与所需 Kext，生成完整 EFI 目录。  
+5. 构建结束后会弹出 **「Before Using EFI」** 说明，其中会要求你完成 **USB 映射**（见下一节）；输入 **`AGREE`** 可打开生成好的 EFI 目录。
 
 ---
 
-## 四、USBToolBox 做 USB Map
+## 四、USBToolBox 做 USB Map（需用户自行完成）
 
-用 [USBToolBox/tool](https://github.com/USBToolBox/tool) 做端口映射。
+EFI 里自带的 USB 配置是通用的，**USB 端口映射需要用户按本机实际端口做一遍**，用 [USBToolBox/tool](https://github.com/USBToolBox/tool) 完成。
 
 ### 发现端口并生成 kext
 
@@ -146,7 +128,7 @@ date: 2026-02-27 00:00:00 +0800
 
 ### 把 USBToolBox 结果写回 EFI
 
-OpCore Simplify 会提示：删掉 EFI 里默认的 USB 文件（如 `UTBDefault.kext`），按提示确认后，把 USBToolBox 生成的 kext 放进 `EFI/OC/Kexts/`，并确认 `config.plist` 里引用的是新 kext。
+构建 EFI 完成后，OpCore Simplify 的「Before Using EFI」说明里会写清：用 USBToolBox 做好映射后，将生成的 **UTBMap.kext** 放入 **EFI/OC/Kexts/**，并**删除**该目录下的 **UTBDefault.kext**；再用 ProperTree 打开 `config.plist`，按 **Ctrl+R**（或 Command+R）执行 **OC Snapshot** 同步 Kext 列表；若单控制器端口数超过 15，需启用 XhciPortLimit 相关补丁。完成后保存。输入 **`AGREE`** 后程序会打开生成好的 EFI 目录，便于你复制到 U 盘。
 
 这一步完成后，你的 EFI 已经具备了**针对当前主板的 USB 正确映射**，可以极大提升稳定性（睡眠、唤醒、安装过程中键盘鼠标可用等）。
 
