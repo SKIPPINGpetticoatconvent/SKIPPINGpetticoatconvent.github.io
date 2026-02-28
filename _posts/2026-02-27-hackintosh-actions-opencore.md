@@ -207,6 +207,58 @@ EFI 里自带的 USB 配置是通用的，**USB 端口映射需要用户按本�
 
 ---
 
+## 八、可选：开发者环境部署
+
+系统稳定后，如需搭建常用开发环境，可安装 **Homebrew**（包管理）与 **Oh My Zsh**（Zsh 配置框架）。
+
+### 安装 Homebrew
+
+在终端执行官方一键安装脚本（见 [brew.sh](https://brew.sh)）：
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+按提示完成安装后，根据终端输出的说明把 `brew` 加入 PATH（Apple Silicon 常见路径为 `/opt/homebrew/bin`，Intel 为 `/usr/local/bin`）。
+
+### 安装 Oh My Zsh
+
+已安装 Zsh（macOS 默认）后，执行（见 [ohmyz.sh](https://ohmyz.sh)）：
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+安装完成后可在 `~/.zshrc` 中更换主题、插件等。
+
+### Oh My Zsh 推荐插件
+
+推荐安装以下三个插件，需先克隆到 Oh My Zsh 的 custom 插件目录，再在 `~/.zshrc` 的 `plugins=(...)` 中启用：
+
+| 插件 | 作用 |
+|------|------|
+| [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) | 根据历史命令给出灰色预测，按 → 采纳 |
+| [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) | 命令语法高亮（正确绿色、错误红色等） |
+| [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) | 输入子串后按 ↑/↓ 在历史中搜索匹配命令 |
+
+安装（在 Oh My Zsh 已安装的前提下执行）：
+
+```bash
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+```
+
+然后编辑 `~/.zshrc`，在 `plugins=(...)` 中加入（**zsh-syntax-highlighting 须放在最后**）：
+
+```bash
+plugins=(git zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
+```
+
+保存后执行 `source ~/.zshrc` 或新开终端即可生效。
+
+---
+
 ## 检查清单
 
 ### 镜像与启动盘
