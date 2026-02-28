@@ -231,28 +231,35 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 安装完成后可在 `~/.zshrc` 中更换主题、插件等。
 
-### Oh My Zsh 推荐插件
+### Oh My Zsh 推荐插件（Homebrew 安装）
 
-推荐安装以下三个插件，需先克隆到 Oh My Zsh 的 custom 插件目录，再在 `~/.zshrc` 的 `plugins=(...)` 中启用：
+用 Homebrew 安装最省事，且不依赖直连 GitHub。以下三个插件均可直接安装：
 
 | 插件 | 作用 |
 |------|------|
-| [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) | 根据历史命令给出灰色预测，按 → 采纳 |
-| [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) | 命令语法高亮（正确绿色、错误红色等） |
-| [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) | 输入子串后按 ↑/↓ 在历史中搜索匹配命令 |
+| **zsh-autosuggestions** | 根据历史命令给出灰色预测，按 → 采纳 |
+| **zsh-syntax-highlighting** | 命令语法高亮（正确绿色、错误红色等） |
+| **zsh-history-substring-search** | 输入子串后按 ↑/↓ 在历史中搜索匹配命令 |
 
-安装（在 Oh My Zsh 已安装的前提下执行）：
+安装（需已安装 Homebrew）：
 
 ```bash
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+brew install zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search
 ```
 
-然后编辑 `~/.zshrc`，在 `plugins=(...)` 中加入（**zsh-syntax-highlighting 须放在最后**）：
+在 `~/.zshrc` **末尾**加入（顺序勿改，**zsh-syntax-highlighting 须在最后**）。`$(brew --prefix)` 会随 Intel/Apple Silicon 自动对应 `/usr/local` 或 `/opt/homebrew`：
 
 ```bash
-plugins=(git zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
+# Homebrew 安装的 zsh 插件
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+```
+
+若出现 “highlighters directory not found”，在 `~/.zshenv` 中增加一行（没有该文件则新建）：
+
+```bash
+export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=$(brew --prefix)/share/zsh-syntax-highlighting/highlighters
 ```
 
 保存后执行 `source ~/.zshrc` 或新开终端即可生效。
